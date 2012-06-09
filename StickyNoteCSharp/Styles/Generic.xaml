@@ -1,0 +1,179 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:StickyNoteCSharp.Converters"
+                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+
+    <LinearGradientBrush x:Key="NoteBackgroundBrush" StartPoint="0.467,0.026" EndPoint="0.546,0.999">
+        <GradientStop Offset="0" Color="#FFFFFF99" />
+        <GradientStop Offset="0.3" Color="#FFF4EA70" />
+        <GradientStop Offset="1" Color="#FFFBFB88" />
+    </LinearGradientBrush>
+
+    <Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="TabNavigation" Value="Cycle" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="StickyNoteBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To=".55" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates" ei:ExtendedVisualStateManager.UseFluidLayout="True">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5">
+                                        <VisualTransition.GeneratedEasingFunction>
+                                            <CubicEase EasingMode="EaseInOut" />
+                                        </VisualTransition.GeneratedEasingFunction>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(FrameworkElement.Width)">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <s:Double>150</s:Double>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(FrameworkElement.Height)">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <s:Double>150</s:Double>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>10</Thickness>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <VisualStateManager.CustomVisualStateManager>
+                            <ei:ExtendedVisualStateManager />
+                        </VisualStateManager.CustomVisualStateManager>
+                        <Rectangle x:Name="fillColor"
+                                   Fill="#FFBADDE9"
+                                   IsHitTestVisible="False"
+                                   Opacity="0"
+                                   RadiusX="1"
+                                   RadiusY="1" />
+                        <Rectangle x:Name="fillColor2"
+                                   Fill="#FFBADDE9"
+                                   IsHitTestVisible="False"
+                                   Opacity="0"
+                                   RadiusX="1"
+                                   RadiusY="1" />
+                        <Border x:Name="StickyNoteBorder"
+                                MinWidth="50"
+                                MinHeight="50"
+                                HorizontalAlignment="Center"
+                                Background="{StaticResource NoteBackgroundBrush}"
+                                BorderBrush="DarkGray"
+                                BorderThickness="2"
+                                CornerRadius="2">
+                            <Border.Margin>
+                                <Binding RelativeSource="{RelativeSource Self}">
+                                    <Binding.Converter>
+                                        <c:IndexToMarginValueConverter />
+                                    </Binding.Converter>
+                                </Binding>
+                            </Border.Margin>
+                            <Border.RenderTransform>
+                                <RotateTransform CenterX="25" CenterY="4">
+                                    <RotateTransform.Angle>
+                                        <Binding RelativeSource="{RelativeSource Self}">
+                                            <Binding.Converter>
+                                                <c:IndexToAngleConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </RotateTransform.Angle>
+                                </RotateTransform>
+                            </Border.RenderTransform>
+                            <StackPanel>
+                                <StackPanel>
+                                    <TextBlock HorizontalAlignment="Center"
+                                               FontFamily="Century Gothic"
+                                               FontSize="14"
+                                               Foreground="Black">
+                                        <TextBlock.Text>
+                                            <Binding Path="DateCreated.Month">
+                                                <Binding.Converter>
+                                                    <c:MonthNumberToNameValueConverter />
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock HorizontalAlignment="Center"
+                                               FontFamily="Century Gothic"
+                                               FontSize="24"
+                                               Foreground="Black"
+                                               Text="{Binding DateCreated.Day}" />
+                                </StackPanel>
+                                <StackPanel x:Name="stackPanel"
+                                            Width="0"
+                                            Height="0"
+                                            MaxHeight="150"
+                                            Margin="0">
+                                    <TextBox x:Name="textBox"
+                                             Width="150"
+                                             Height="140"
+                                             AcceptsReturn="True"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             FontSize="12"
+                                             HorizontalScrollBarVisibility="Disabled"
+                                             Text="{Binding Text}"
+                                             TextWrapping="Wrap"
+                                             VerticalScrollBarVisibility="Auto" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ItemsPanelTemplate x:Key="StickNoteItemsPanelTemplate">
+        <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto" UseLayoutRounding="True">
+            <i:Interaction.Behaviors>
+                <ei:FluidMoveBehavior AppliesTo="Children"
+                                      Duration="0:0:0.5"
+                                      FloatAbove="True" />
+            </i:Interaction.Behaviors>
+        </StackPanel>
+    </ItemsPanelTemplate>
+</ResourceDictionary>
