@@ -6,7 +6,7 @@ This is the source code that accompaniments the [blog post](http://stevenhollidg
 ## About
 This code is a port of the VB.NET version produced by Billy Hollis, whose StickyNotes feature in the excellent WPF application:  [StaffLynx](http://slmasters.net/videos/StaffLynxDemonstration.wmv)
 
-The aim is promote, share and cross pollinate ideas and approaches for data entry within Metro style apps.
+The aim is promote, share and cross pollinate ideas and approaches for data entry within forward thinking apps.
 
 Source code:  [https://github.com/stevenh77/StickyNotesCSharp](https://github.com/stevenh77/StickyNotesCSharp)
 
