@@ -104,7 +104,8 @@
                                 Background="{StaticResource NoteBackgroundBrush}"
                                 BorderBrush="DarkGray"
                                 BorderThickness="2"
-                                CornerRadius="2">
+                                CornerRadius="2"
+                                Cursor="Hand">
                             <Border.Margin>
                                 <Binding RelativeSource="{RelativeSource Self}">
                                     <Binding.Converter>
